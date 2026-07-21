@@ -1,53 +1,462 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Casting Quarter</title>
-    <meta name="description" content="Casting Quarter support, privacy policy and platform terms.">
-    <link rel="canonical" href="https://castingquarter.com/">
-    <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
-    <header class="site-header">
-      <nav class="nav" aria-label="Main navigation">
-        <a class="brand" href="/">Casting Quarter</a>
-        <div class="nav-links">
-          <a href="/privacy/">Privacy</a>
-          <a href="/terms/">Terms</a>
-          <a href="/community/">Community</a>
-          <a href="/support/">Support</a>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casting Quarter — The casting app that brings it all together.</title>
+<meta name="description" content="Casting Quarter brings casting opportunities, artists and verified companies together in one organised, accessible platform.">
+<link rel="icon" href="assets/marketing/asset-434eaecd9cca.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --panel:#141718;
+    --panel-2:#191d1f;
+    --line:rgba(255,255,255,0.08);
+    --gold:#f0a93a;
+    --gold-2:#f6c877;
+    --teal:#2ddba8;
+    --blue:#4a90f5;
+    --white:#f5f6f7;
+    --muted:#9aa1a6;
+    --radius:22px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--white);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Sora',sans-serif;
+    font-weight:700;
+    margin:0;
+    letter-spacing:-0.02em;
+  }
+  p{margin:0;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+  /* progress rail */
+  #progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--gold));width:0%;z-index:1000;transition:width .1s linear;}
+
+  /* quarter mark - the signature element, echoing the CQ icon's 4-quadrant shape */
+  .qmark{
+    width:10px;height:10px;min-width:10px;border-radius:3px;
+    background:var(--gold);
+  }
+  .qmark.teal{background:var(--teal);}
+  .qmark.blue{background:var(--blue);}
+
+  /* nav */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(10,10,10,0.75);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1180px;margin:0 auto;}
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand img{height:40px;width:auto;}
+  .navlinks{display:flex;gap:32px;font-size:15px;font-weight:500;color:var(--muted);}
+  .navlinks a:hover{color:var(--white);}
+  .nav-cta{background:var(--gold);color:#141400;padding:10px 20px;border-radius:100px;font-weight:600;font-size:14px;white-space:nowrap;}
+  .navlinks{display:none;}
+  @media(min-width:860px){.navlinks{display:flex;}}
+
+  /* hero */
+  .hero{
+    position:relative;
+    padding:88px 0 60px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;
+    background:radial-gradient(circle,rgba(240,169,58,0.16),transparent 70%);
+    pointer-events:none;
+  }
+  .hero::after{
+    content:'';position:absolute;bottom:-260px;left:-200px;width:600px;height:600px;
+    background:radial-gradient(circle,rgba(45,219,168,0.13),transparent 70%);
+    pointer-events:none;
+  }
+  .hero-grid{display:grid;grid-template-columns:1fr;gap:48px;align-items:center;position:relative;z-index:1;}
+  @media(min-width:960px){.hero-grid{grid-template-columns:1.05fr 0.95fr;gap:40px;}}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    color:var(--teal);font-weight:600;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;
+    margin-bottom:18px;
+  }
+  .hero-grid > div:first-child{text-align:center;}
+  .hero-grid > div:first-child .eyebrow{margin-left:auto;margin-right:auto;}
+  .hero h1{font-size:44px;line-height:1.08;}
+  @media(min-width:600px){.hero h1{font-size:58px;}}
+  .hero h1 .accent{color:var(--gold);}
+  .hero p.sub{margin:24px auto 0;font-size:20px;font-weight:600;line-height:1.5;color:#e4e6e8;max-width:480px;text-align:center;}
+  .hero p.sub .hl{color:var(--teal);}
+  .cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px;justify-content:center;}
+  .btn-store{
+    display:flex;align-items:center;gap:12px;
+    background:var(--white);color:#0a0a0a;
+    padding:12px 22px;border-radius:14px;font-weight:600;
+    transition:transform .15s ease;
+  }
+  .btn-store:hover{transform:translateY(-2px);}
+  .btn-store svg{width:26px;height:26px;flex-shrink:0;}
+  .btn-store .label small{display:block;font-size:11px;font-weight:500;color:#555;}
+  .btn-store .label strong{display:block;font-size:16px;line-height:1.1;}
+  .btn-android{
+    display:flex;align-items:center;gap:12px;
+    border:1px solid var(--line);color:var(--muted);
+    padding:12px 22px;border-radius:14px;font-weight:600;
+  }
+  .btn-android .label small{display:block;font-size:11px;color:var(--muted);}
+  .btn-android .label strong{display:block;font-size:16px;color:#c7cbce;}
+  .hero-visual{display:flex;justify-content:center;}
+  .hero-visual .frame{
+    width:100%;max-width:340px;border-radius:32px;overflow:hidden;
+    box-shadow:0 40px 100px -30px rgba(0,0,0,0.7), 0 0 0 1px var(--line);
+  }
+
+  /* section shells */
+  section{padding:90px 0;}
+  .section-head{max-width:600px;margin-bottom:52px;}
+  .section-head .qmark{margin-bottom:16px;}
+  .section-head h2{font-size:32px;line-height:1.15;}
+  @media(min-width:600px){.section-head h2{font-size:40px;}}
+  .section-head p{margin-top:14px;font-size:17px;color:var(--muted);line-height:1.6;}
+
+  /* strip */
+  .strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--panel);}
+  .strip .wrap{display:flex;flex-direction:column;align-items:center;gap:12px;padding:34px 24px;}
+  .pill{width:100%;max-width:340px;justify-content:center;}
+  .pill{
+    display:flex;align-items:center;gap:10px;
+    background:var(--panel-2);border:1px solid var(--line);
+    padding:10px 18px;border-radius:100px;font-size:14px;font-weight:600;color:#cfd3d6;
+  }
+  .pill .dot{width:8px;height:8px;border-radius:50%;}
+
+  /* two-col feature (artists / companies) */
+  .feature{
+    display:grid;grid-template-columns:1fr;gap:48px;align-items:center;
+  }
+  @media(min-width:960px){.feature{grid-template-columns:1fr 1fr;gap:60px;}}
+  .feature.reverse .feature-visual{order:-1;}
+  @media(min-width:960px){.feature.reverse .feature-visual{order:2;}}
+  .feature-visual{display:flex;justify-content:center;}
+  .feature-visual img{border-radius:26px;max-width:300px;box-shadow:0 30px 80px -30px rgba(0,0,0,0.6),0 0 0 1px var(--line);}
+  .flist{list-style:none;margin:28px 0 0;padding:0;display:flex;flex-direction:column;gap:18px;}
+  .flist li{display:flex;gap:14px;align-items:flex-start;}
+  .flist .qmark{margin-top:8px;}
+  .flist .ftext strong{display:block;font-size:16px;font-weight:600;}
+  .flist .ftext span{display:block;font-size:14.5px;color:var(--muted);margin-top:2px;line-height:1.5;}
+  .tier-note{
+    margin-top:30px;padding:18px 20px;border-radius:16px;background:var(--panel-2);border:1px solid var(--line);
+    font-size:14.5px;color:#c7cbce;line-height:1.6;
+  }
+  .tier-note b{color:var(--white);}
+
+  /* gallery */
+  .gallery-strip{
+    display:flex;gap:22px;overflow-x:auto;padding:8px 24px 20px;scroll-snap-type:x mandatory;
+    -ms-overflow-style:none;scrollbar-width:none;
+  }
+  .gallery-strip::-webkit-scrollbar{display:none;}
+  .gcard{
+    scroll-snap-align:start;flex:0 0 auto;width:220px;
+  }
+  .gcard img{border-radius:22px;box-shadow:0 20px 50px -20px rgba(0,0,0,0.6),0 0 0 1px var(--line);}
+  .gcard .cap{margin-top:12px;font-size:13.5px;color:var(--muted);text-align:center;}
+
+  /* guest access */
+  .guest{
+    display:grid;grid-template-columns:1fr;gap:48px;align-items:center;
+  }
+  @media(min-width:960px){.guest{grid-template-columns:1fr 1fr;gap:60px;}}
+  .guest-visual img{border-radius:26px;max-width:300px;margin:0 auto;box-shadow:0 30px 80px -30px rgba(0,0,0,0.6),0 0 0 1px var(--line);}
+
+  /* safety */
+  .safety-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:36px;
+  }
+  .safety-grid{display:grid;grid-template-columns:1fr;gap:28px;}
+  @media(min-width:760px){.safety-grid{grid-template-columns:1fr 1fr;}}
+  .safety-item strong{display:block;font-size:16px;margin-bottom:6px;}
+  .safety-item span{color:var(--muted);font-size:14.5px;line-height:1.6;}
+
+  /* download cta */
+  .cta-band{
+    background:linear-gradient(135deg,#151313,#0a0a0a);
+    border:1px solid var(--line);border-radius:28px;
+    padding:56px 32px;text-align:center;
+    position:relative;overflow:hidden;
+  }
+  .cta-band::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(circle at 30% 20%,rgba(240,169,58,0.14),transparent 55%),radial-gradient(circle at 80% 80%,rgba(45,219,168,0.12),transparent 55%);
+  }
+  .cta-band > *{position:relative;z-index:1;}
+  .cta-band h2{font-size:32px;}
+  @media(min-width:600px){.cta-band h2{font-size:40px;}}
+  .cta-band p{color:var(--muted);margin-top:14px;font-size:17px;}
+  .cta-band .cta-row{justify-content:center;margin-top:30px;}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:56px 0 36px;}
+  .foot-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:40px;margin-bottom:40px;}
+  .foot-brand{display:flex;align-items:center;gap:12px;}
+  .foot-brand img{height:28px;}
+  .foot-links{display:flex;flex-wrap:wrap;gap:32px;}
+  .foot-col h4{font-size:13px;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:14px;font-weight:600;}
+  .foot-col a{display:block;font-size:14.5px;color:#cfd3d6;margin-bottom:10px;}
+  .foot-col a:hover{color:var(--gold);}
+  .foot-bottom{border-top:1px solid var(--line);padding-top:24px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font-size:13px;color:var(--muted);}
+
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<header>
+  <nav>
+    <div class="brand">
+      <img src="assets/marketing/casting-quarter-logo.png" alt="Casting Quarter">
+    </div>
+    <div class="navlinks">
+      <a href="#artists">Artists</a>
+      <a href="#companies">Companies</a>
+      <a href="#screenshots">Screenshots</a>
+      <a href="#subscriptions">Subscriptions</a>
+      <a href="#legal">Legal</a>
+    </div>
+    <a class="nav-cta" href="https://apps.apple.com/gb/app/cast-mee/id6785971157" target="_blank" rel="noopener">Get the app</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><span class="qmark teal" style="width:18px;height:18px;min-width:18px;border-radius:5px;"></span> For artists &amp; casting companies</span>
+      <h1>The casting app that <span class="accent">brings it all together.</span></h1>
+      <p class="sub">Stop scrolling through Facebook groups and scattered casting posts. <span class="hl">Discover roles, showcase your talent and connect</span> — all in one app.</p>
+      <div class="cta-row">
+        <a class="btn-store" href="https://apps.apple.com/gb/app/cast-mee/id6785971157" target="_blank" rel="noopener">
+          <svg viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+          <span class="label"><small>Download on the</small><strong>App Store</strong></span>
+        </a>
+        <span class="btn-android">
+          <svg viewBox="0 0 576 512" fill="currentColor" width="24" height="24"><path d="M420.55 301.93a24 24 0 1 1 24-24 24 24 0 0 1-24 24m-265.1 0a24 24 0 1 1 24-24 24 24 0 0 1-24 24m272.42-108.13 47.24-81.85a10 10 0 1 0-17.32-10l-47.85 82.91a301.25 301.25 0 0 0-251.88 0l-47.85-82.91a10 10 0 1 0-17.32 10l47.24 81.85C67.24 231.98 15.9 300.99 8 384h560c-7.9-83.01-59.24-152.02-131.13-190.2"/></svg>
+          <span class="label"><small>Coming soon to</small><strong>Google Play</strong></span>
+        </span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="frame">
+        <img src="assets/marketing/hero-app.png" alt="Casting Quarter app hero screen">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="wrap">
+    <span class="pill"><span class="dot" style="background:var(--teal);"></span>Circus</span>
+    <span class="pill"><span class="dot" style="background:var(--gold);"></span>Cruise Ship</span>
+    <span class="pill"><span class="dot" style="background:var(--blue);"></span>Theatre</span>
+    <span class="pill"><span class="dot" style="background:var(--teal);"></span>Television &amp; Film</span>
+    <span class="pill"><span class="dot" style="background:var(--gold);"></span>Commercials</span>
+    <span class="pill"><span class="dot" style="background:var(--blue);"></span>Dancer</span>
+    <span class="pill"><span class="dot" style="background:var(--teal);"></span>Musician</span>
+    <span class="pill"><span class="dot" style="background:var(--gold);"></span>Singer</span>
+  </div>
+</div>
+
+<section id="artists">
+  <div class="wrap">
+    <div class="feature">
+      <div>
+        <div class="section-head" style="margin-bottom:0;">
+          <span class="qmark teal"></span>
+          <h2 style="margin-top:20px;">Your next opportunity starts here</h2>
+          <p>Build a professional profile — biography, experience, skills, availability, headshots, showreels, CV and social links — then move from discovery to conversation.</p>
         </div>
-      </nav>
-    </header>
+        <ul class="flist">
+          <li><span class="qmark teal"></span><div class="ftext"><strong>Search and filter</strong><span>Find open casting opportunities by category, talent type and location.</span></div></li>
+          <li><span class="qmark teal"></span><div class="ftext"><strong>Apply directly</strong><span>Submit through the app and track submitted and shortlisted applications.</span></div></li>
+          <li><span class="qmark teal"></span><div class="ftext"><strong>Message after shortlisting</strong><span>Communicate with companies once you're matched, and get notified of updates.</span></div></li>
+          <li><span class="qmark teal"></span><div class="ftext"><strong>Control your privacy</strong><span>Manage availability and profile-media watermark and privacy settings.</span></div></li>
+        </ul>
+        <div class="tier-note"><b>Free Access</b> includes up to three full casting-post views per day. <b>Artist Premium</b> unlocks unlimited casting access and proposal messaging, subject to the features shown in the app.</div>
+      </div>
+      <div class="feature-visual">
+        <img src="assets/marketing/artist-journey.png" alt="Casting Quarter artist journey screen">
+      </div>
+    </div>
+  </div>
+</section>
 
-    <main class="hero">
-      <p class="eyebrow">Casting Quarter</p>
-      <h1>Professional casting, all in one place.</h1>
-      <p class="lead">Casting Quarter helps artists discover casting opportunities and helps companies review talent, applications and proposal conversations in one professional place.</p>
+<section id="companies" style="background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="feature reverse">
+      <div>
+        <div class="section-head" style="margin-bottom:0;">
+          <span class="qmark"></span>
+          <h2 style="margin-top:20px;">Find the talent your production needs</h2>
+          <p>Verified companies create a profile, publish castings, review applicants, shortlist performers and manage proposal conversations — all from one workspace.</p>
+        </div>
+        <ul class="flist">
+          <li><span class="qmark"></span><div class="ftext"><strong>Verification and moderation</strong><span>Company profiles go through verification, and platform activity may be reviewed.</span></div></li>
+          <li><span class="qmark"></span><div class="ftext"><strong>Casting and applicant management</strong><span>Create castings and review every applicant in one place.</span></div></li>
+          <li><span class="qmark"></span><div class="ftext"><strong>Detailed talent search</strong><span>Filter artist profiles, CVs, media and availability to find the right fit.</span></div></li>
+          <li><span class="qmark"></span><div class="ftext"><strong>Shortlisting and proposals</strong><span>Shortlist suitable artists and message through proposal conversations, with push notifications and reporting tools built in.</span></div></li>
+        </ul>
+      </div>
+      <div class="feature-visual">
+        <img src="assets/marketing/company-journey.png" alt="Casting Quarter companies journey screen">
+      </div>
+    </div>
+  </div>
+</section>
 
-      <div class="card-grid">
-        <a class="card" href="/privacy/">
-          <strong>Privacy Policy</strong>
-          <span>How Casting Quarter collects, uses and protects account information.</span>
-        </a>
-        <a class="card" href="/terms/">
-          <strong>Platform Terms</strong>
-          <span>The rules for using Casting Quarter safely and professionally.</span>
-        </a>
-        <a class="card" href="/community/">
-          <strong>Community Guidelines</strong>
-          <span>The standards that help keep casting activity safe, honest and professional.</span>
-        </a>
-        <a class="card" href="/support/">
-          <strong>Support</strong>
-          <span>Contact Casting Quarter for account, privacy, safety and subscription help.</span>
+<section>
+  <div class="wrap">
+    <div class="guest">
+      <div class="guest-visual">
+        <img src="assets/marketing/guest-preview.png" alt="Casting Quarter guest preview screen">
+      </div>
+      <div>
+        <div class="section-head" style="margin-bottom:0;">
+          <span class="qmark blue"></span>
+          <h2 style="margin-top:20px;">Explore before you join</h2>
+          <p>Guests can browse open casting titles, categories and full descriptions without creating an account. Register or log in when you're ready to see company information, dates, payment details, requirements and application options.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="screenshots" style="background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="qmark teal"></span>
+      <h2 style="margin-top:20px;">See Casting Quarter in action</h2>
+      <p>Circus, cruise, theatre and more, ready to explore with a swipe.</p>
+    </div>
+  </div>
+  <div class="gallery-strip">
+    <div class="gcard"><img src="assets/marketing/open-castings.png" alt="Browse open castings"><p class="cap">Browse open castings</p></div>
+    <div class="gcard"><img src="assets/marketing/artist-profile.png" alt="Artist profile"><p class="cap">Put your talent in the spotlight</p></div>
+    <div class="gcard"><img src="assets/marketing/application-status.png" alt="Application status"><p class="cap">Apply and get shortlisted</p></div>
+    <div class="gcard"><img src="assets/marketing/messages.png" alt="Messaging with companies"><p class="cap">From match to conversation</p></div>
+    <div class="gcard"><img src="assets/marketing/company-search.png" alt="Company dashboard and talent search"><p class="cap">Everything companies need to cast</p></div>
+  </div>
+</section>
+
+<section id="subscriptions">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="qmark"></span>
+      <h2 style="margin-top:20px;">Subscriptions</h2>
+      <p>Casting Quarter offers Artist Premium and Company Premium as monthly, three-month and annual auto-renewable subscriptions.</p>
+    </div>
+    <div class="safety-card">
+      <div class="safety-grid">
+        <div class="safety-item"><strong>Pricing</strong><span>Available plans, current local prices and included features are displayed in the app before purchase.</span></div>
+        <div class="safety-item"><strong>Billing</strong><span>Payment is charged to your Apple Account after confirmation.</span></div>
+        <div class="safety-item"><strong>Auto-renewal</strong><span>Subscriptions renew automatically unless cancelled at least 24 hours before the end of the current billing period.</span></div>
+        <div class="safety-item"><strong>Manage anytime</strong><span>Manage or cancel your subscription through your Apple Account settings. Existing purchases can be restored within the app.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="qmark blue"></span>
+      <h2 style="margin-top:20px;">Safety and eligibility</h2>
+    </div>
+    <div class="safety-card">
+      <div class="safety-grid">
+        <div class="safety-item"><strong>18+ only</strong><span>Casting Quarter is intended only for users aged 18 or over.</span></div>
+        <div class="safety-item"><strong>Moderated companies</strong><span>Company profiles and platform activity may be reviewed by moderators.</span></div>
+        <div class="safety-item"><strong>Reporting</strong><span>Users can report inappropriate content or behaviour through the app.</span></div>
+        <div class="safety-item"><strong>Verified companies</strong><span>Companies go through a verification process before publishing castings.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cta-band">
+      <h2>Everything starts with a swipe.</h2>
+      <p>Built for performers and casting companies.</p>
+      <div class="cta-row">
+        <a class="btn-store" href="https://apps.apple.com/gb/app/cast-mee/id6785971157" target="_blank" rel="noopener">
+          <svg viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+          <span class="label"><small>Download on the</small><strong>App Store</strong></span>
         </a>
       </div>
-    </main>
+    </div>
+  </div>
+</section>
 
-    <footer class="site-footer">
-      © 2026 Casting Quarter. For support, email <a href="mailto:support@castingquarter.com">support@castingquarter.com</a>.
-    </footer>
-  </body>
+<footer id="legal">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <img src="assets/marketing/casting-quarter-logo.png" alt="Casting Quarter">
+      </div>
+      <div class="foot-links">
+        <div class="foot-col">
+          <h4>Product</h4>
+          <a href="#artists">For artists</a>
+          <a href="#companies">For companies</a>
+          <a href="#screenshots">Screenshots</a>
+        </div>
+        <div class="foot-col">
+          <h4>Legal</h4>
+          <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" target="_blank" rel="noopener">Terms of Use (EULA)</a>
+          <a href="https://castingquarter.com/privacy/" target="_blank" rel="noopener">Privacy Policy</a>
+          <a href="https://castingquarter.com/terms/" target="_blank" rel="noopener">Platform Terms</a>
+          <a href="https://castingquarter.com/community/" target="_blank" rel="noopener">Community Guidelines</a>
+        </div>
+        <div class="foot-col">
+          <h4>Get the app</h4>
+          <a href="https://apps.apple.com/gb/app/cast-mee/id6785971157" target="_blank" rel="noopener">App Store</a>
+          <a href="#" style="color:var(--muted);pointer-events:none;">Google Play — coming soon</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Casting Quarter. Casting Quarter is intended only for users aged 18 or over.</span>
+      <span>Made for performers and casting companies.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement;
+    var scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    document.getElementById('progress').style.width = scrolled + '%';
+  });
+</script>
+
+</body>
 </html>
