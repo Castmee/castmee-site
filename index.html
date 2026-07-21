@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Casting Quarter — The casting app that brings it all together.</title>
 <meta name="description" content="Casting Quarter brings casting opportunities, artists and verified companies together in one organised, accessible platform.">
-<link rel="icon" href="assets/marketing/asset-434eaecd9cca.png">
+<link rel="icon" href="assets/marketing/casting-quarter-app-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -221,13 +221,117 @@
   .foot-col a:hover{color:var(--gold);}
   .foot-bottom{border-top:1px solid var(--line);padding-top:24px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font-size:13px;color:var(--muted);}
 
+  /* Fluid concept — kept separate from the original homepage. */
+  .fluid-page{
+    background:
+      radial-gradient(circle at 12% 6%,rgba(45,219,168,.09),transparent 24%),
+      radial-gradient(circle at 88% 10%,rgba(240,169,58,.11),transparent 28%),
+      var(--bg);
+  }
+  .fluid-page header{
+    background:rgba(10,10,10,.58);
+    box-shadow:0 12px 50px rgba(0,0,0,.18);
+  }
+  .fluid-page .hero{
+    min-height:calc(100vh - 73px);
+    display:flex;align-items:center;
+    padding:76px 0 110px;
+  }
+  .fluid-page .hero-grid > div:first-child{animation:heroCopyIn .9s cubic-bezier(.2,.8,.2,1) both;}
+  .fluid-page .hero-visual{animation:heroPhoneIn 1.05s .12s cubic-bezier(.2,.8,.2,1) both;will-change:transform;}
+  .fluid-page .hero-visual .frame{
+    position:relative;
+    animation:phoneFloat 5.8s 1.2s ease-in-out infinite;
+  }
+  .fluid-page .hero-visual .frame::after{
+    content:'';position:absolute;inset:12% -24% -10%;z-index:-1;
+    background:radial-gradient(circle,rgba(240,169,58,.22),transparent 62%);
+    filter:blur(26px);opacity:.75;
+  }
+  .fluid-page .strip{position:relative;z-index:4;margin-top:-42px;border-radius:30px 30px 0 0;overflow:hidden;}
+  .fluid-page .strip .wrap{
+    max-width:none;flex-direction:row;justify-content:center;gap:12px;
+    animation:stripDrift 12s ease-in-out infinite alternate;
+  }
+  .fluid-page .strip .pill{width:auto;min-width:max-content;}
+  .fluid-page section:not(.hero){
+    padding:140px 0;
+    margin-top:-34px;
+    border-radius:42px 42px 0 0;
+    position:relative;overflow:clip;isolation:isolate;
+    border-top:1px solid rgba(255,255,255,.09);
+  }
+  .fluid-page section:not(.hero)::before{
+    content:'';position:absolute;width:520px;height:520px;border-radius:50%;
+    right:-280px;top:12%;z-index:-1;pointer-events:none;
+    background:radial-gradient(circle,rgba(45,219,168,.11),transparent 68%);
+    filter:blur(8px);
+  }
+  .fluid-page section:not(.hero):nth-of-type(odd)::before{
+    right:auto;left:-280px;
+    background:radial-gradient(circle,rgba(240,169,58,.11),transparent 68%);
+  }
+  .fluid-page section:not(.hero):nth-of-type(4n)::before{
+    background:radial-gradient(circle,rgba(74,144,245,.12),transparent 68%);
+  }
+  .fluid-page .flow-scene > .wrap{
+    opacity:var(--scene-opacity,.4);
+    transform:translate3d(0,var(--scene-y,36px),0) scale(var(--scene-scale,.97));
+    transform-origin:center;
+    transition:opacity .16s linear,transform .16s linear;
+    will-change:opacity,transform;
+  }
+  .fluid-page .feature,.fluid-page .guest{min-height:68vh;}
+  .fluid-page .feature-visual img,.fluid-page .guest-visual img{
+    transition:transform .55s cubic-bezier(.2,.8,.2,1),box-shadow .55s ease;
+  }
+  .fluid-page .flow-scene.is-visible .feature-visual img,
+  .fluid-page .flow-scene.is-visible .guest-visual img{
+    box-shadow:0 42px 110px -35px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.12);
+  }
+  .fluid-page .flist li,.fluid-page .safety-item,.fluid-page .gcard{
+    opacity:0;transform:translateY(28px) scale(.97);
+    transition:opacity .65s ease,transform .75s cubic-bezier(.2,.8,.2,1);
+  }
+  .fluid-page .flow-scene.is-visible .flist li,
+  .fluid-page .flow-scene.is-visible .safety-item,
+  .fluid-page .flow-scene.is-visible .gcard{opacity:1;transform:none;}
+  .fluid-page .flow-scene.is-visible :is(.flist li,.safety-item,.gcard):nth-child(2){transition-delay:.08s;}
+  .fluid-page .flow-scene.is-visible :is(.flist li,.safety-item,.gcard):nth-child(3){transition-delay:.16s;}
+  .fluid-page .flow-scene.is-visible :is(.flist li,.safety-item,.gcard):nth-child(4){transition-delay:.24s;}
+  .fluid-page .flow-scene.is-visible :is(.flist li,.safety-item,.gcard):nth-child(5){transition-delay:.32s;}
+  .fluid-page .gcard img{transition:transform .4s cubic-bezier(.2,.8,.2,1),filter .4s ease;}
+  .fluid-page .gcard:hover img{transform:translateY(-12px) scale(1.025);filter:saturate(1.08);}
+  .fluid-page .cta-band{box-shadow:0 40px 120px -45px rgba(240,169,58,.3);}
+  .fluid-page .cta-band::before{animation:ctaGlow 7s ease-in-out infinite alternate;}
+  @media(min-width:960px){
+    .fluid-page .feature-visual,.fluid-page .guest-visual{position:sticky;top:132px;align-self:start;}
+    .fluid-page .gallery-strip{padding-top:26px;padding-bottom:42px;}
+    .fluid-page .gcard{width:250px;}
+  }
+  @media(max-width:720px){
+    .fluid-page .hero{min-height:auto;padding:68px 0 105px;}
+    .fluid-page section:not(.hero){padding:104px 0;margin-top:-24px;border-radius:28px 28px 0 0;}
+    .fluid-page .strip .wrap{justify-content:flex-start;overflow-x:auto;animation:none;}
+    .fluid-page .feature,.fluid-page .guest{min-height:0;}
+  }
+  @keyframes heroCopyIn{from{opacity:0;transform:translateY(42px);}to{opacity:1;transform:none;}}
+  @keyframes heroPhoneIn{from{opacity:0;transform:translateY(70px) scale(.9) rotate(2deg);}to{opacity:1;transform:none;}}
+  @keyframes phoneFloat{0%,100%{transform:translateY(0) rotate(-.35deg);}50%{transform:translateY(-14px) rotate(.35deg);}}
+  @keyframes stripDrift{from{transform:translateX(-2%);}to{transform:translateX(2%);}}
+  @keyframes ctaGlow{from{transform:scale(1);opacity:.7;}to{transform:scale(1.12);opacity:1;}}
+
   @media(prefers-reduced-motion:reduce){
     html{scroll-behavior:auto;}
-    *{transition:none !important;}
+    *{transition:none !important;animation:none !important;}
+    .fluid-page .flow-scene > .wrap,
+    .fluid-page .flist li,.fluid-page .safety-item,.fluid-page .gcard{
+      opacity:1 !important;transform:none !important;
+    }
   }
 </style>
 </head>
-<body>
+<body class="fluid-page">
 
 <div id="progress"></div>
 
@@ -243,7 +347,7 @@
       <a href="#subscriptions">Subscriptions</a>
       <a href="#legal">Legal</a>
     </div>
-    <a class="nav-cta" href="https://apps.apple.com/gb/app/cast-mee/id6785971157" target="_blank" rel="noopener">Get the app</a>
+    <a class="nav-cta" href="https://apps.apple.com/us/app/casting-quarter/id6785971157" target="_blank" rel="noopener">Get the app</a>
   </nav>
 </header>
 
@@ -254,7 +358,7 @@
       <h1>The casting app that <span class="accent">brings it all together.</span></h1>
       <p class="sub">Stop scrolling through Facebook groups and scattered casting posts. <span class="hl">Discover roles, showcase your talent and connect</span> — all in one app.</p>
       <div class="cta-row">
-        <a class="btn-store" href="https://apps.apple.com/gb/app/cast-mee/id6785971157" target="_blank" rel="noopener">
+        <a class="btn-store" href="https://apps.apple.com/us/app/casting-quarter/id6785971157" target="_blank" rel="noopener">
           <svg viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
           <span class="label"><small>Download on the</small><strong>App Store</strong></span>
         </a>
@@ -407,7 +511,7 @@
       <h2>Everything starts with a swipe.</h2>
       <p>Built for performers and casting companies.</p>
       <div class="cta-row">
-        <a class="btn-store" href="https://apps.apple.com/gb/app/cast-mee/id6785971157" target="_blank" rel="noopener">
+        <a class="btn-store" href="https://apps.apple.com/us/app/casting-quarter/id6785971157" target="_blank" rel="noopener">
           <svg viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
           <span class="label"><small>Download on the</small><strong>App Store</strong></span>
         </a>
@@ -435,10 +539,11 @@
           <a href="https://castingquarter.com/privacy/" target="_blank" rel="noopener">Privacy Policy</a>
           <a href="https://castingquarter.com/terms/" target="_blank" rel="noopener">Platform Terms</a>
           <a href="https://castingquarter.com/community/" target="_blank" rel="noopener">Community Guidelines</a>
+          <a href="https://castingquarter.com/support/" target="_blank" rel="noopener">Support</a>
         </div>
         <div class="foot-col">
           <h4>Get the app</h4>
-          <a href="https://apps.apple.com/gb/app/cast-mee/id6785971157" target="_blank" rel="noopener">App Store</a>
+          <a href="https://apps.apple.com/us/app/casting-quarter/id6785971157" target="_blank" rel="noopener">App Store</a>
           <a href="#" style="color:var(--muted);pointer-events:none;">Google Play — coming soon</a>
         </div>
       </div>
@@ -451,11 +556,51 @@
 </footer>
 
 <script>
-  window.addEventListener('scroll', function(){
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var scenes = Array.prototype.slice.call(document.querySelectorAll('body > section:not(.hero)'));
+  scenes.forEach(function(scene){ scene.classList.add('flow-scene'); });
+
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) entry.target.classList.add('is-visible');
+      });
+    }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
+    scenes.forEach(function(scene){ observer.observe(scene); });
+  } else {
+    scenes.forEach(function(scene){ scene.classList.add('is-visible'); });
+  }
+
+  var ticking = false;
+  function renderFluidScroll(){
     var h = document.documentElement;
     var scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
     document.getElementById('progress').style.width = scrolled + '%';
-  });
+    if (!reduceMotion) {
+      var vh = window.innerHeight;
+      scenes.forEach(function(scene){
+        var rect = scene.getBoundingClientRect();
+        var centre = rect.top + rect.height / 2;
+        var distance = Math.min(1, Math.abs(centre - vh / 2) / (vh * 1.05));
+        var direction = centre > vh / 2 ? 1 : -1;
+        scene.style.setProperty('--scene-opacity', String(0.38 + (1 - distance) * 0.62));
+        scene.style.setProperty('--scene-scale', String(0.968 + (1 - distance) * 0.032));
+        scene.style.setProperty('--scene-y', String(direction * distance * 34) + 'px');
+      });
+      var heroVisual = document.querySelector('.hero-visual');
+      if (heroVisual) heroVisual.style.transform = 'translate3d(0,' + Math.min(90, h.scrollTop * 0.11) + 'px,0)';
+    }
+    ticking = false;
+  }
+  function requestFluidScroll(){
+    if (!ticking) {
+      window.requestAnimationFrame(renderFluidScroll);
+      ticking = true;
+    }
+  }
+  window.addEventListener('scroll', requestFluidScroll, { passive:true });
+  window.addEventListener('resize', requestFluidScroll);
+  renderFluidScroll();
 </script>
 
 </body>
